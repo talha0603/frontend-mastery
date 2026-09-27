@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+
+  --color-ink: #0f1c1a;
+  --color-muted: #5b6b67;
+  --color-paper: #eef3f1;
+  --color-panel: #f7faf9;
+  --color-line: #d5e0dc;
+  --color-accent: #0f766e;
+  --color-accent-deep: #115e59;
+  --color-danger: #b42318;
+}
+
+@layer base {
+  html, body, #root { min-height: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #d9f2ec 0%, transparent 55%),
+      radial-gradient(900px 500px at 100% 0%, #e7eef8 0%, transparent 50%),
+      linear-gradient(180deg, #f4f7f6 0%, #e9efec 100%);
+  }
+
+  input:focus,
+  button:focus {
+    outline: none !important;
+  }
+}
+
+/* keep this OUTSIDE @layer so it always wins */
+.add-todo-btn {
+  background-color: #0f766e !important;
+  color: #ffffff !important;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+.add-todo-btn:hover {
+  background-color: #115e59 !important;
+}
