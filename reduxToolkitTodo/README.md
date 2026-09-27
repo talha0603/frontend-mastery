@@ -1,16 +1,123 @@
-# React + Vite
+# Redux Toolkit Todo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and clean Todo application built with **React**, **Vite**, and **Redux Toolkit**.
 
-Currently, two official plugins are available:
+This project is part of my frontend learning journey in the [`frontend-mastery`](https://github.com/talha0603/frontend-mastery) repository.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This app demonstrates how to manage global state using Redux Toolkit. Users can add todos, view the list from the Redux store, and remove items in real time.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- Add new todo items
+- Display todos from Redux global state
+- Remove todos with one click
+- Clean and responsive UI
+- Built with modern React practices
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React | UI library |
+| Vite | Development & build tool |
+| Redux Toolkit | State management |
+| React-Redux | React bindings for Redux |
+| Tailwind CSS | Styling |
+
+---
+
+## Project Structure
+
+```text
+reduxToolkitTodo/
+├── src/
+│   ├── app/
+│   │   └── store.js
+│   ├── features/
+│   │   └── todo/
+│   │       └── todoSlice.js
+│   ├── components/
+│   │   ├── AddTodo.jsx
+│   │   └── Todos.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── public/
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## What I Learned
+
+- Creating a Redux store with `configureStore`
+- Building slices using `createSlice`
+- Using `useDispatch` to send actions
+- Using `useSelector` to read state
+- Wrapping the app with Redux `<Provider>`
+- Understanding Redux state shape (`state.todo.todos`)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js installed on your machine
+
+### Installation
+
+```bash
+cd reduxToolkitTodo
+npm install
+```
+
+### Run the project
+
+```bash
+npm run dev
+```
+
+Open the local URL from the terminal (usually `http://localhost:5173`).
+
+---
+
+## Available Scripts
+
+```bash
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run preview   # Preview production build
+```
+
+---
+
+## How It Works
+
+1. `todoSlice.js` contains the todo state and reducers (`addTodo`, `removeTodo`)
+2. `store.js` registers the todo reducer in the Redux store
+3. `AddTodo.jsx` dispatches the `addTodo` action
+4. `Todos.jsx` reads todos with `useSelector` and dispatches `removeTodo`
+
+---
+
+## Author
+
+**Talha**  
+GitHub: [talha0603](https://github.com/talha0603)
+
+---
+
+## License
+
+This project is for learning purposes.
