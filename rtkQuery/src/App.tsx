@@ -1,25 +1,61 @@
-import PostsCard from "./components/PostCard"
-import { useGetPostsQuery } from "./redux/api"
+import PostCard from "./components/PostCard"
+import {
+  useGetPostsQuery,
+  useGetCommentsQuery,
+  useGetProfileQuery,
+} from "./redux/api"
+
 
 const App = () => {
-  const { isLoading, isError, isSuccess, data, error } = useGetPostsQuery()
-
-  if (isLoading) return <h2>Loading...</h2>
-  if (isError) return <h2>Error: {JSON.stringify(error)}</h2>
+  const postsQuery = useGetPostsQuery()
+  const commentsQuery = useGetCommentsQuery()
+  const profileQuery = useGetProfileQuery()
 
   return (
-  <div className="app">
-    <h1>Fetching API Data</h1>
-    <p className="subtitle">Posts fetched with RTK Query + json-server</p>
+    <div className="app">
+      <header className="hero">
+        <h1>Fetched Data From API</h1>
+        <p>RTK Query + json-server with related posts and comments</p>
+      </header>
 
-    {isLoading && <p className="status">Loading...</p>}
-    {isError && <p className="status">Error loading posts</p>}
+      <section className="profile-card">
+        <div>
+          <h2>Profile</h2>
+          
+          {profileQuery.isLoading && <p className="status">Loading profile...</p>}
+          {profileQuery.isSuccess && <strong>{profileQuery.data.name}</strong>}
+        </div>
+      </section>
 
-    <div className="list">
-      {isSuccess &&
-        data?.map((post) => <PostsCard key={post.id} post={post} />)}
+      <section>
+        <h2 className="section-title">Posts</h2>
+
+        {(postsQuery.isLoading || commentsQuery.isLoading) && (
+          <p className="status">Loading posts...</p>
+        )}
+
+        {postsQuery.isError && <p className="status">Failed to load posts</p>}
+
+        <div className="list">
+          {postsQuery.isSuccess &&
+            commentsQuery.isSuccess &&
+            postsQuery.data.map((post) => {
+              const relatedComments = commentsQuery.data.filter(
+                (comment) => comment.postId === post.id
+              )
+
+              return (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  comments={relatedComments}
+                />
+              )
+            })}
+        </div>
+      </section>
     </div>
-  </div>
-)}
+  )
+}
 
 export default App
