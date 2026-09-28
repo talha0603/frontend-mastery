@@ -1,15 +1,11 @@
 import type { Post } from "../types/post"
 
-type PostsCardProps = {
-  post: Post
-}
-
-const PostsCard = ({ post }: PostsCardProps) => {
+const PostsCard = ({ post }: { post: Post }) => {
   return (
-    <div>
+    <article className="card">
       <h4>{post.title}</h4>
-      <p>{post.views}</p>
-    </div>
+      <span className="badge">{post.views} views</span>
+    </article>
   )
 }
 
