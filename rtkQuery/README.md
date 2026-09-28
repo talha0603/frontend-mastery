@@ -1,75 +1,141 @@
-# React + TypeScript + Vite
+# RTK Query Data Fetching
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript project that fetches data from a fake backend using **RTK Query** and **json-server**.
 
-Currently, two official plugins are available:
+This project is part of my frontend learning journey in the [`frontend-mastery`](https://github.com/talha0603/frontend-mastery) repository.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=FFD62E)
+![Redux Toolkit](https://img.shields.io/badge/RTK_Query-764ABC?style=flat&logo=redux&logoColor=white)
+![JSON Server](https://img.shields.io/badge/json--server-000000?style=flat&logo=json&logoColor=white)
 
-## React Compiler
+## Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![RTK Query Data Fetching](./Data%20Fetching.png)
 
-## Expanding the ESLint configuration
+## Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This app demonstrates how to fetch and display API data using **RTK Query**.  
+A fake backend is created with **json-server**, which reads data from `db.json`.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Flow:**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+db.json → json-server → useGetPostsQuery() → map() → PostCard
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Fake REST API with json-server
+- Data fetching with RTK Query
+- Loading and error handling
+- TypeScript types for API data
+- Reusable `PostCard` component
+- Clean UI for fetched posts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
 
+| Technology | Purpose |
+|---|---|
+| React | UI library |
+| TypeScript | Type safety |
+| Vite | Dev server & build tool |
+| Redux Toolkit (RTK Query) | API fetching & caching |
+| React-Redux | Connect React with Redux |
+| json-server | Fake backend API |
+
+## Project Structure
+
+```text
+rtkQuery/
+├── src/
+│   ├── components/
+│   │   └── PostCard.tsx
+│   ├── DB/
+│   │   └── db.json
+│   ├── redux/
+│   │   └── api.ts
+│   ├── types/
+│   │   └── post.ts
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── Data Fetching.png
+├── index.html
+└── package.json
 ```
+
+## What I Learned
+
+- Why we use json-server as a fake backend
+- Creating an API service with `createApi`
+- Using `fetchBaseQuery` with a base URL
+- Defining endpoints (`getPosts`)
+- Using auto-generated hooks like `useGetPostsQuery`
+- Handling `isLoading`, `isError`, and `data`
+- Mapping API data into UI cards
+- Defining TypeScript types for API responses
+- Connecting the app with `ApiProvider`
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js installed
+- json-server installed (local or global)
+
+### Installation
+
+```bash
+cd rtkQuery
+npm install
+npm install json-server
+```
+
+### Start fake API (Terminal 1)
+
+```bash
+npx json-server --watch src/DB/db.json --port 3000
+```
+
+### Start React app (Terminal 2)
+
+```bash
+npm run dev
+```
+
+Open the local URL shown in the terminal (usually `http://localhost:5173`).
+
+## Available Scripts
+
+```bash
+npm run dev       # Start Vite development server
+npm run build     # Build for production
+npm run preview   # Preview production build
+```
+
+## How It Works
+
+1. `db.json` stores fake data (`posts`, `comments`, `profile`)
+2. `json-server` turns that file into a REST API on port `3000`
+3. `api.ts` creates RTK Query endpoints (example: `GET /posts`)
+4. `App.tsx` calls `useGetPostsQuery()` to fetch posts
+5. Each post is rendered using the `PostCard` component
+
+## Example API Endpoints
+
+After running json-server:
+
+- `http://localhost:3000/posts`
+- `http://localhost:3000/comments`
+- `http://localhost:3000/profile`
+
+## Author
+
+**Talha**  
+GitHub: [talha0603](https://github.com/talha0603)
+
+## License
+
+This project is for learning purposes.
