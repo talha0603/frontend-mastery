@@ -1,6 +1,6 @@
 # RTK Query Data Fetching
 
-A React + TypeScript project that fetches data from a fake backend using **RTK Query** and **json-server**.
+A React + TypeScript project that fetches related data from a fake backend using **RTK Query** and **json-server**.
 
 This project is part of my frontend learning journey in the [`frontend-mastery`](https://github.com/talha0603/frontend-mastery) repository.
 
@@ -16,23 +16,30 @@ This project is part of my frontend learning journey in the [`frontend-mastery`]
 
 ## Overview
 
-This app demonstrates how to fetch and display API data using **RTK Query**.  
-A fake backend is created with **json-server**, which reads data from `db.json`.
+This app demonstrates API data fetching with **RTK Query** and relationship handling between resources.
+
+It loads:
+- Profile data
+- Posts data
+- Comments data
+
+Comments are shown under their related post using `postId`.
 
 **Flow:**
 
 ```text
-db.json → json-server → useGetPostsQuery() → map() → PostCard
+db.json → json-server → RTK Query hooks → App → PostCard (with related comments)
 ```
 
 ## Features
 
 - Fake REST API with json-server
-- Data fetching with RTK Query
+- Fetch multiple endpoints with RTK Query
+- Profile, Posts, and Comments integration
+- Related data bonding (`comment.postId === post.id`)
 - Loading and error handling
-- TypeScript types for API data
-- Reusable `PostCard` component
-- Clean UI for fetched posts
+- TypeScript types for API models
+- Clean card-based UI
 
 ## Tech Stack
 
@@ -57,7 +64,9 @@ rtkQuery/
 │   ├── redux/
 │   │   └── api.ts
 │   ├── types/
-│   │   └── post.ts
+│   │   ├── post.ts
+│   │   ├── comment.ts
+│   │   └── profile.ts
 │   ├── App.tsx
 │   ├── main.tsx
 │   └── index.css
@@ -68,22 +77,20 @@ rtkQuery/
 
 ## What I Learned
 
-- Why we use json-server as a fake backend
-- Creating an API service with `createApi`
-- Using `fetchBaseQuery` with a base URL
-- Defining endpoints (`getPosts`)
-- Using auto-generated hooks like `useGetPostsQuery`
-- Handling `isLoading`, `isError`, and `data`
-- Mapping API data into UI cards
+- Creating a fake backend with json-server
+- Building an API service with `createApi`
+- Using multiple endpoints (`getPosts`, `getComments`, `getProfile`)
+- Using RTK Query hooks in React components
+- Handling loading and error states
+- Connecting related data with foreign keys (`postId`)
+- Rendering nested UI (comments inside post cards)
 - Defining TypeScript types for API responses
-- Connecting the app with `ApiProvider`
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js installed
-- json-server installed (local or global)
 
 ### Installation
 
@@ -117,15 +124,19 @@ npm run preview   # Preview production build
 
 ## How It Works
 
-1. `db.json` stores fake data (`posts`, `comments`, `profile`)
-2. `json-server` turns that file into a REST API on port `3000`
-3. `api.ts` creates RTK Query endpoints (example: `GET /posts`)
-4. `App.tsx` calls `useGetPostsQuery()` to fetch posts
-5. Each post is rendered using the `PostCard` component
+1. `db.json` stores `posts`, `comments`, and `profile`
+2. `json-server` exposes them as REST endpoints
+3. `api.ts` defines RTK Query endpoints for each resource
+4. `App.tsx` fetches profile, posts, and comments
+5. Comments are filtered by `postId` and passed into each `PostCard`
+
+### Relationship Logic
+
+```ts
+comments.filter((comment) => comment.postId === post.id)
+```
 
 ## Example API Endpoints
-
-After running json-server:
 
 - `http://localhost:3000/posts`
 - `http://localhost:3000/comments`
